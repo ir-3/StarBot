@@ -2,7 +2,6 @@ from discord.ext import commands
 import subprocess, asyncio, json
 from time import sleep
 
-import lib.verificationHandler as verificationHandler
 from lib.botController import botControllerClass
 
 bot = commands.Bot(command_prefix = "")
@@ -67,7 +66,6 @@ async def on_ready():
 loop = asyncio.get_event_loop()
 
 loop.create_task(bot.botController.activeCheck())
-loop.create_task(verificationHandler.handleExpiredCodes())
 
 bot.load_extension("cogs.utils")
 
