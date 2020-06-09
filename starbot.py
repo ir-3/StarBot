@@ -69,7 +69,4 @@ loop.create_task(bot.botController.activeCheck())
 
 bot.load_extension("cogs.utils")
 
-try:
-    bot.run(bot.config["discord"]["token"])
-except:
-    pass
+bot.run(bot.config["discord"]["token"])
