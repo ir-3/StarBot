@@ -36,7 +36,7 @@ Bot Discord Server: https://discord.gg/cPkrrrj""")
 @bot.command(aliases = ["botcontrol", "bc"])
 async def botControl(ctx, subcommand):
     if not ctx.message.author.id in bot.config["discord"]["botControllers"] and not ctx.message.author.id == bot.config["discord"]["botMaster"]:
-        await ctx.send(f"Access Denied: If you belive this is an error please contact <@{bot.config['discord']['botMaster']}>")
+        await ctx.send(f"Access Denied: If you belive this is an error please contact PeterCrawley.")
         return
     
     if subcommand == "shutdown" and ctx.message.author.id == bot.config["discord"]["botMaster"]:

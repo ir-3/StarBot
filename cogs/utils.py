@@ -8,7 +8,7 @@ class utils(commands.Cog):
 
 	@commands.command(aliases = ["playerinfo", "pi"])
 	async def playerInfo(self, ctx, player = ""):
-		if self.bot.botController.disabled == True: await ctx.send(f"ACCESS DENIED: This function has been disabled temporarily by <@{self.bot.botController.disabledBy}>"); return
+		if self.bot.botController.disabled == True: await ctx.send(f"Access Denied: This function has been disabled temporarily by <@{self.bot.botController.disabledBy}>"); return
 
 		if player == "":
 			await ctx.send("A player name is required.")
@@ -58,7 +58,7 @@ class utils(commands.Cog):
 
 	@commands.command(aliases = ["nationinfo", "ni"])
 	async def nationInfo(self, ctx, nation = ""):
-		if self.bot.botController.disabled == True: await ctx.send(f"ACCESS DENIED: This function has been disabled temporarily by <@{self.bot.botController.disabledBy}>"); return
+		if self.bot.botController.disabled == True: await ctx.send(f"Access Denied: This function has been disabled temporarily by <@{self.bot.botController.disabledBy}>"); return
 
 		if nation == "":
 			await ctx.send("A nation name is required.")
@@ -114,7 +114,7 @@ class utils(commands.Cog):
 
 	@commands.command(aliases = ["settlementinfo", "si"])
 	async def settlementInfo(self, ctx, settlement = ""):
-		if self.bot.botController.disabled == True: await ctx.send(f"ACCESS DENIED: This function has been disabled temporarily by <@{self.bot.botController.disabledBy}>"); return
+		if self.bot.botController.disabled == True: await ctx.send(f"Access Denied: This function has been disabled temporarily by <@{self.bot.botController.disabledBy}>"); return
 
 		if settlement == "":
 			await ctx.send("A settlement name is required.")
