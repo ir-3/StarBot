@@ -34,29 +34,37 @@ Commands:
 Bot Discord Server: https://discord.gg/cPkrrrj""")
 
 @bot.command(aliases = ["botcontrol", "bc"])
-async def botControl(ctx, subcommand):
-    if not ctx.message.author.id in bot.config["discord"]["botControllers"] and not ctx.message.author.id == bot.config["discord"]["botMaster"]:
-        await ctx.send(f"Access Denied: If you belive this is an error please contact PeterCrawley.")
-        return
-    
-    if subcommand == "shutdown" and ctx.message.author.id == bot.config["discord"]["botMaster"]:
+async def botControl(ctx, subcommand = ""):
+    if subcommand == "shutdown":
+        if not ctx.message.author.id == bot.config["discord"]["botMaster"]:
+            await ctx.send("Access Denied.")
+            return
+
         await ctx.send("Shutting Down")
         await ctx.bot.logout()
+        
+    elif subcommand == "disable":
+        if not ctx.message.author.id in bot.config["discord"]["botControllers"] and not ctx.message.author.id == bot.config["discord"]["botMaster"]:
+            await ctx.send("Access Denied. Please contact PeterCrawley if this should not be the case.")
+            return
 
-    elif not ctx.message.author.id == bot.config["discord"]["botMaster"] and subcommand == "shutdown":
-        await ctx.send("Access Denied.")
-
-    if subcommand == "disable":
         bot.botController.disabled = True
         bot.botController.disabledBy = ctx.message.author.id
 
         await ctx.send("Disabled")
 
-    if subcommand == "enable":
+    elif subcommand == "enable":
+        if not ctx.message.author.id in bot.config["discord"]["botControllers"] and not ctx.message.author.id == bot.config["discord"]["botMaster"]:
+            await ctx.send("Access Denied. Please contact PeterCrawley if this should not be the case.")
+            return
+
         bot.botController.disabled = False
         bot.botController.disabledBy = 0
 
         await ctx.send("Enabled")
+
+    else:
+        await ctx.send("Invalid subcommand.")
 
 @bot.event
 async def on_ready():
