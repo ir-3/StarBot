@@ -20,7 +20,7 @@ bot.command_prefix = ">"
 
 @commands.command()
 async def help(ctx):
-    await ctx.send("""**StarBot v1.0.1**
+    await ctx.send("""**StarBot v1.0.3**
 
 Commands:
 >playerInfo (>playerinfo / >pi) : Gets details about a player
@@ -49,7 +49,6 @@ async def botControl(ctx, subcommand = ""):
             return
 
         bot.botController.disabled = True
-        bot.botController.disabledBy = ctx.message.author.id
 
         await ctx.send("Disabled")
 
@@ -59,7 +58,6 @@ async def botControl(ctx, subcommand = ""):
             return
 
         bot.botController.disabled = False
-        bot.botController.disabledBy = 0
 
         await ctx.send("Enabled")
 

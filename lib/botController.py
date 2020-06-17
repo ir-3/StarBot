@@ -8,7 +8,6 @@ class botControllerClass:
 		self.client = None
 		self.timeRemaining = 0
 		self.disabled = False
-		self.disabledBy = 0
 
 	def beginUsage(self):
 		if self.active == False and self.timeRemaining <= 0 and self.disabled == False:
