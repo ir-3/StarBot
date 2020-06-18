@@ -20,7 +20,7 @@ bot.command_prefix = ">"
 
 @commands.command()
 async def help(ctx):
-    await ctx.send("""**StarBot v1.0.4**
+    await ctx.send("""**StarBot v1.0.5**
 
 Commands:
 >playerInfo (>playerinfo / >pi) : Gets details about a player
