@@ -8,6 +8,10 @@ class utils(commands.Cog):
 
 	@commands.command(aliases = ["playerinfo", "pi"])
 	async def playerInfo(self, ctx, player = ""):
+		if ctx.message.guild.id in bot.config["discord"]["blacklistedServers"]:
+			await ctx.send("Internal Error, please try again later.")
+			return
+
 		if self.bot.botController.disabled == True: await ctx.send("Access Denied: This function has been disabled temporarily."); return
 
 		if player == "":
@@ -58,6 +62,10 @@ class utils(commands.Cog):
 
 	@commands.command(aliases = ["nationinfo", "ni"])
 	async def nationInfo(self, ctx, nation = ""):
+		if ctx.message.guild.id in bot.config["discord"]["blacklistedServers"]:
+			await ctx.send("Internal Error, please try again later.")
+			return
+			
 		if self.bot.botController.disabled == True: await ctx.send("Access Denied: This function has been disabled temporarily."); return
 
 		if nation == "":
@@ -114,6 +122,10 @@ class utils(commands.Cog):
 
 	@commands.command(aliases = ["settlementinfo", "si"])
 	async def settlementInfo(self, ctx, settlement = ""):
+		if ctx.message.guild.id in bot.config["discord"]["blacklistedServers"]:
+			await ctx.send("Internal Error, please try again later.")
+			return
+			
 		if self.bot.botController.disabled == True: await ctx.send("Access Denied: This function has been disabled temporarily."); return
 
 		if settlement == "":
