@@ -9,23 +9,22 @@ bot.remove_command('help')
 
 sleep(0.1)
 
-try:
-    bot.config = json.loads(open("data/config.json", "r").read())
-except:
-    open("data/config.json", "w").write('{"minecraft":{"email":"","password":"","serverAddress":"creative.starlegacy.net","connectionCooldown":500},"discord":{"token":"","botMaster":0,"botControllers":[0]}}')
+bot.config = json.loads(open("data/config.json", "r").read())
 
 bot.botController = botControllerClass()
 
-bot.command_prefix = ">"
+bot.command_prefix = bot.config["discord"]["prefix"]
 
 @commands.command()
 async def help(ctx):
-    await ctx.send("""**StarBot v1.0.5**
+    await ctx.send("""**StarBot v1.1.0**
 
 Commands:
 >playerInfo (>playerinfo / >pi) : Gets details about a player
 >nationInfo (>nationinfo / >ni) : Gets details about a nation
+>nationTop (>nt / >ntop / >nationtop) : Nation Leaderboard
 >settlementInfo (>settlementinfo / >si) : Gets details about a settlement
+>settlementTop (>st / >stop / >settlementtop) : Settlement Leaderboard
 >botControl (>botcontrol / >bc) : Restricted Command
 >botControl shutdown : Restricted Command - Shuts down the bot
 >botControl disable : Restricted Command - Prevents the bot from connecting to minecraft

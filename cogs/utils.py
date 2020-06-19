@@ -12,7 +12,8 @@ class utils(commands.Cog):
 			await ctx.send("Internal Error, please try again later.")
 			return
 
-		if self.bot.botController.disabled == True: await ctx.send("Access Denied: This function has been disabled temporarily."); return
+		if self.bot.botController.disabled == True:
+			return await ctx.send("Bot is currently disabled.")
 
 		if player == "":
 			await ctx.send("A player name is required.")
@@ -66,7 +67,8 @@ class utils(commands.Cog):
 			await ctx.send("Internal Error, please try again later.")
 			return
 			
-		if self.bot.botController.disabled == True: await ctx.send("Access Denied: This function has been disabled temporarily."); return
+		if self.bot.botController.disabled == True:
+			return await ctx.send("Bot is currently disabled.")
 
 		if nation == "":
 			await ctx.send("A nation name is required.")
@@ -126,7 +128,8 @@ class utils(commands.Cog):
 			await ctx.send("Internal Error, please try again later.")
 			return
 			
-		if self.bot.botController.disabled == True: await ctx.send("Access Denied: This function has been disabled temporarily."); return
+		if self.bot.botController.disabled == True:
+			return await ctx.send("Bot is currently disabled.")
 
 		if settlement == "":
 			await ctx.send("A settlement name is required.")
@@ -199,6 +202,87 @@ class utils(commands.Cog):
 		embed.add_field(name=membersHeader, value=members, inline=False)
 		embed.set_footer(text=f"Requested by {ctx.message.author.name}")
 		await ctx.send(embed=embed)
+
+	@commands.command(aliases = ["nt", "ntop", "nationtop"])
+	async def nationTop(self, ctx, page = 1):
+		if not isinstance(page, int):
+			return await ctx.send("Page number must be an integer or blank.")
+		if self.bot.botController.disabled == True:
+			return await ctx.send("Bot is currently disabled.")
+
+		ready = False
+		outputArray = []
+
+		self.bot.botController.beginUsage()
+		await self.bot.botController.runCommand(f"/n top {page}")
+
+		while True:
+			output = self.bot.botController.getLine()
+
+			if output.startswith("="):
+				ready = not ready
+				if not ready: break
+
+			else:
+				if ready:
+					outputArray.append(output)
+
+		self.bot.botController.endUsage()
+
+		outputArray.pop(0)
+		outputEnd = outputArray[-1].replace("/", " / ").replace("[<--] ", "").replace(" [-->]", " ")
+		outputArray.pop(-1)
+
+		output = "```markdown\n#Name / Leader / Members / Settlements / Outposts#"
+
+		for nation in outputArray:
+			nationInfoArray = nation.split(" ")
+			output += f"\n{nationInfoArray[0]} / {nationInfoArray[1]} / {nationInfoArray[2]} {nationInfoArray[3]} {nationInfoArray[4]} {nationInfoArray[5]}{nationInfoArray[6]} / {nationInfoArray[7]} / {nationInfoArray[8]}"
+
+		output += f"\n< {outputEnd}>```"
+
+		await ctx.send(output)
+
+	@commands.command(aliases = ["st", "stop", "settlementtop"])
+	async def settlementTop(self, ctx, page = 1):
+		if not isinstance(page, int):
+			return await ctx.send("Page number must be an integer or blank.")
+		if self.bot.botController.disabled == True:
+			return await ctx.send("Bot is currently disabled.")
+
+		ready = False
+		outputArray = []
+
+		self.bot.botController.beginUsage()
+		await self.bot.botController.runCommand(f"/s top {page}")
+
+		while True:
+			output = self.bot.botController.getLine()
+
+			if output.startswith("="):
+				ready = not ready
+				if not ready: break
+
+			else:
+				if ready:
+					outputArray.append(output)
+
+		self.bot.botController.endUsage()
+
+		outputArray.pop(0)
+		outputEnd = outputArray[-1].replace("/", " / ").replace("[<--] ", "").replace(" [-->]", " ")
+		outputArray.pop(-1)
+
+		output = "```markdown\n#Name / Leader / Members / Nation#"
+
+		for settlement in outputArray:
+			settlementInfoArray = settlement.split(" ")
+			if not len(settlementInfoArray) == 8: settlementInfoArray.append("None")
+			output += f"\n{settlementInfoArray[0]} / {settlementInfoArray[1]} / {settlementInfoArray[2]} {settlementInfoArray[3]} {settlementInfoArray[4]} {settlementInfoArray[5]}{settlementInfoArray[6]} / {settlementInfoArray[7]}"
+
+		output += f"\n< {outputEnd}>```"
+
+		await ctx.send(output)
 
 def setup(bot):
 	bot.add_cog(utils(bot))
