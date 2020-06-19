@@ -8,10 +8,6 @@ class utils(commands.Cog):
 
 	@commands.command(aliases = ["playerinfo", "pi"])
 	async def playerInfo(self, ctx, player = ""):
-		if ctx.message.guild.id in self.bot.config["discord"]["blacklistedServers"]:
-			await ctx.send("Internal Error, please try again later.")
-			return
-
 		if self.bot.botController.disabled == True:
 			return await ctx.send("Bot is currently disabled.")
 
@@ -62,11 +58,7 @@ class utils(commands.Cog):
 		await ctx.send(embed=embed)
 
 	@commands.command(aliases = ["nationinfo", "ni"])
-	async def nationInfo(self, ctx, nation = ""):
-		if ctx.message.guild.id in self.bot.config["discord"]["blacklistedServers"]:
-			await ctx.send("Internal Error, please try again later.")
-			return
-			
+	async def nationInfo(self, ctx, nation = ""):			
 		if self.bot.botController.disabled == True:
 			return await ctx.send("Bot is currently disabled.")
 
@@ -124,9 +116,6 @@ class utils(commands.Cog):
 
 	@commands.command(aliases = ["settlementinfo", "si"])
 	async def settlementInfo(self, ctx, settlement = ""):
-		if ctx.message.guild.id in self.bot.config["discord"]["blacklistedServers"]:
-			return await ctx.send("Internal Error, please try again later.")
-			
 		if self.bot.botController.disabled == True:
 			return await ctx.send("Bot is currently disabled.")
 
@@ -204,8 +193,6 @@ class utils(commands.Cog):
 
 	@commands.command(aliases = ["nt", "ntop", "nationtop"])
 	async def nationTop(self, ctx, page = 1):
-		if ctx.message.guild.id in self.bot.config["discord"]["blacklistedServers"]:
-			return await ctx.send("Internal Error, please try again later.")
 		if not isinstance(page, int):
 			return await ctx.send("Page number must be an integer or blank.")
 		if self.bot.botController.disabled == True:
@@ -246,8 +233,6 @@ class utils(commands.Cog):
 
 	@commands.command(aliases = ["st", "stop", "settlementtop"])
 	async def settlementTop(self, ctx, page = 1):
-		if ctx.message.guild.id in self.bot.config["discord"]["blacklistedServers"]:
-			return await ctx.send("Internal Error, please try again later.")
 		if not isinstance(page, int):
 			return await ctx.send("Page number must be an integer or blank.")
 		if self.bot.botController.disabled == True:
