@@ -17,7 +17,7 @@ bot.command_prefix = bot.config["discord"]["prefix"]
 
 @commands.command()
 async def help(ctx):
-	await ctx.send("""**StarBot v1.1.2**
+	await ctx.send("""**StarBot v1.1.3**
 
 Commands:
 >playerInfo (>playerinfo / >pi) : Gets details about a player
