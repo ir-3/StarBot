@@ -125,8 +125,7 @@ class utils(commands.Cog):
 	@commands.command(aliases = ["settlementinfo", "si"])
 	async def settlementInfo(self, ctx, settlement = ""):
 		if ctx.message.guild.id in self.bot.config["discord"]["blacklistedServers"]:
-			await ctx.send("Internal Error, please try again later.")
-			return
+			return await ctx.send("Internal Error, please try again later.")
 			
 		if self.bot.botController.disabled == True:
 			return await ctx.send("Bot is currently disabled.")
@@ -205,6 +204,8 @@ class utils(commands.Cog):
 
 	@commands.command(aliases = ["nt", "ntop", "nationtop"])
 	async def nationTop(self, ctx, page = 1):
+		if ctx.message.guild.id in self.bot.config["discord"]["blacklistedServers"]:
+			return await ctx.send("Internal Error, please try again later.")
 		if not isinstance(page, int):
 			return await ctx.send("Page number must be an integer or blank.")
 		if self.bot.botController.disabled == True:
@@ -245,6 +246,8 @@ class utils(commands.Cog):
 
 	@commands.command(aliases = ["st", "stop", "settlementtop"])
 	async def settlementTop(self, ctx, page = 1):
+		if ctx.message.guild.id in self.bot.config["discord"]["blacklistedServers"]:
+			return await ctx.send("Internal Error, please try again later.")
 		if not isinstance(page, int):
 			return await ctx.send("Page number must be an integer or blank.")
 		if self.bot.botController.disabled == True:
