@@ -3,6 +3,7 @@ import subprocess, asyncio, json
 from time import sleep
 
 from lib.botController import botControllerClass
+import lib.verificationHandler as verificationHandler
 
 bot = commands.Bot(command_prefix = "")
 bot.remove_command('help')
@@ -67,7 +68,9 @@ async def on_ready():
 loop = asyncio.get_event_loop()
 
 loop.create_task(bot.botController.activeCheck())
+loop.create_task(verificationHandler.handleExpiredCodes())
 
 bot.load_extension("cogs.utils")
+bot.load_extension("cogs.verification")
 
 bot.run(bot.config["discord"]["token"])
