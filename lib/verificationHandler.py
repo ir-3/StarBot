@@ -40,17 +40,30 @@ def verifyCode(code, discord):
     except:
         return False
     
-    if not discord == codeData["discord"]: return False
+    if discord == codeData["discord"]:
+        accounts = json.loads(open("data/accounts.json", "r").read())
 
+        accounts[codeData["minecraft"]] = str(discord)
+
+        open("data/accounts.json", "w").write(json.dumps(accounts))
+
+        del codes[code]
+
+        open("data/codes.json", "w").write(json.dumps(codes))
+
+        return True
+
+def unverifyDiscord(discord):
     accounts = json.loads(open("data/accounts.json", "r").read())
 
-    accounts[codeData["minecraft"]] = str(discord)
+    for i in range(len(accounts)):
+        print(i)
 
+        if accounts[i] == discord:
+            accounts.pop(i)
+    
     open("data/accounts.json", "w").write(json.dumps(accounts))
 
-    del codes[code]
-
-    open("data/codes.json", "w").write(json.dumps(codes))
 
 async def handleExpiredCodes():
     while True:

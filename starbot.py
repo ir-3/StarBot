@@ -18,7 +18,7 @@ bot.command_prefix = bot.config["discord"]["prefix"]
 
 @commands.command()
 async def help(ctx):
-	await ctx.send("""**StarBot v1.1.4**
+	await ctx.send("""**StarBot v1.2.0**
 
 Commands:
 >playerInfo (>playerinfo / >pi) : Gets details about a player
@@ -26,6 +26,7 @@ Commands:
 >nationTop (>nt / >ntop / >nationtop) : Nation Leaderboard
 >settlementInfo (>settlementinfo / >si) : Gets details about a settlement
 >settlementTop (>st / >stop / >settlementtop) : Settlement Leaderboard
+>verify : Verify / Link your discord account with your minecraft account
 
 Bot Discord Server: https://discord.gg/cPkrrrj""")
 
