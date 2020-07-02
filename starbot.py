@@ -1,77 +1,57 @@
-from discord.ext import commands
-import subprocess, asyncio, json
-from time import sleep
-
+import logging, sys, datetime, json, asyncio
 from lib.botController import botControllerClass
-import lib.verificationHandler as verificationHandler
+from discord.ext import commands
+
+# Inilize Logging
+logging.basicConfig(filename = f"{datetime.datetime.now().strftime('%x %X').replace('/', '-')}.log", level = logging.INFO, format = "%(levelname)s / %(filename)s(%(lineno)d) / %(message)s")
+
+console = logging.StreamHandler()
+console.setLevel(logging.INFO)
+console.setFormatter(logging.Formatter("%(levelname)s / %(filename)s(%(lineno)d) / %(message)s"))
+
+logging.getLogger().addHandler(console)
+
+logging.info("Starting Starbot")
+
+# Load discord.py
+logging.info("Loading discord.py")
 
 bot = commands.Bot(command_prefix = "")
-bot.remove_command('help')
+bot.remove_command('help') # We want to use our own help command.
 
-sleep(0.1)
+# Load config
+logging.info("Loading config")
 
 bot.config = json.loads(open("data/config.json", "r").read())
-
-bot.botController = botControllerClass()
-
 bot.command_prefix = bot.config["discord"]["prefix"]
 
-@commands.command()
-async def help(ctx):
-	await ctx.send("""**StarBot v1.2.0**
+# Load BotController
+# TODO: Bot Controller is a legacy class left over from 1.X.X
+logging.info("Loading botController")
 
-Commands:
->playerInfo (>playerinfo / >pi) : Gets details about a player
->nationInfo (>nationinfo / >ni) : Gets details about a nation
->nationTop (>nt / >ntop / >nationtop) : Nation Leaderboard
->settlementInfo (>settlementinfo / >si) : Gets details about a settlement
->settlementTop (>st / >stop / >settlementtop) : Settlement Leaderboard
->verify : Verify / Link your discord account with your minecraft account
+bot.botController = botControllerClass() 
 
-Bot Discord Server: https://discord.gg/cPkrrrj""")
-
-@bot.command(aliases = ["botcontrol", "bc"])
-async def botControl(ctx, subcommand = ""):
-	if subcommand == "shutdown":
-		if not ctx.message.author.id == bot.config["discord"]["botMaster"]:
-			await ctx.send("Access Denied.")
-			return
-
-		await ctx.send("Shutting Down")
-		await ctx.bot.logout()
-		
-	elif subcommand == "disable":
-		if not ctx.message.author.id in bot.config["discord"]["botControllers"] and not ctx.message.author.id == bot.config["discord"]["botMaster"]:
-			await ctx.send("Access Denied. Please contact PeterCrawley if this should not be the case.")
-			return
-
-		bot.botController.disabled = True
-
-		await ctx.send("Disabled")
-
-	elif subcommand == "enable":
-		if not ctx.message.author.id in bot.config["discord"]["botControllers"] and not ctx.message.author.id == bot.config["discord"]["botMaster"]:
-			await ctx.send("Access Denied. Please contact PeterCrawley if this should not be the case.")
-			return
-
-		bot.botController.disabled = False
-
-		await ctx.send("Enabled")
-
-	else:
-		await ctx.send("Invalid subcommand.")
-
-@bot.event
-async def on_ready():
-	bot.remove_command("help")
-	bot.add_command(help)
+# Load Cogs
+logging.info("Loading cogs")
 
 loop = asyncio.get_event_loop()
 
 loop.create_task(bot.botController.activeCheck())
-loop.create_task(verificationHandler.handleExpiredCodes())
-
 bot.load_extension("cogs.utils")
-bot.load_extension("cogs.verification")
+
+bot.load_extension("cogs.misc")
+bot.load_extension("cogs.botControl")
+
+# Events
+@bot.event
+async def on_ready():
+	logging.info("Bot has started")
+
+@bot.event
+async def on_command(context):
+	logging.info(f"{context.message.author.name}#{context.message.author.discriminator} ran the command {context.command} with perameters {str(context.args[2:])}.")
+
+# Start
+logging.info("Starting")
 
 bot.run(bot.config["discord"]["token"])
