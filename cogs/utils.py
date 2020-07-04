@@ -48,7 +48,7 @@ class utils(commands.Cog):
 		level = level.replace("Level:", "")
 		seen = seen.replace("Last Seen:", "")
 
-		embed=discord.Embed(title=f"Player Info for {player}") #, color=nationColor.getNationColor(nation)
+		embed=discord.Embed(title=f"Player Info for {player}", color=nationColor.getNationColor(nation))
 		embed.add_field(name="Settlement", value=settlement, inline=True)
 		embed.add_field(name="Nation", value=nation, inline=True)
 		embed.add_field(name="Experience", value=slxp, inline=True)
@@ -105,7 +105,7 @@ class utils(commands.Cog):
 		membersHeader = membersHeader.replace("ctive", "ctive,")
 		membersHeader = membersHeader.replace("nactive,", "nactive")
 
-		embed=discord.Embed(title=f"Nation Info for {nation}") #, color=nationColor.getNationColor(nation)
+		embed=discord.Embed(title=f"Nation Info for {nation}", color=nationColor.getNationColor(nation)) 
 		embed.add_field(name=outposts.split("): ")[0]+")", value=outposts.split("): ")[1], inline=False)
 		embed.add_field(name=settlements.split("): ")[0]+")", value=settlements.split("): ")[1], inline=False)
 		embed.add_field(name="Balance", value=balance[8:], inline=True)
@@ -178,7 +178,7 @@ class utils(commands.Cog):
 		membersHeader = membersHeader.replace("ctive", "ctive,")
 		membersHeader = membersHeader.replace("nactive,", "nactive")
 
-		embed=discord.Embed(title=f"Settlement Info for {settlement}") #, color=nationColor.getNationColor(nation.split(": ")[1])
+		embed=discord.Embed(title=f"Settlement Info for {settlement}", color=nationColor.getNationColor(nation.split(": ")[1]))
 		embed.add_field(name=nation.split(": ")[0], value=nation.split(": ")[1], inline=True)
 		embed.add_field(name=territory.split(": ")[0], value=territory.split(": ")[1][:-1], inline=True)
 		embed.add_field(name="Balance", value=balance[8:], inline=True)

@@ -1,21 +1,23 @@
 import json, requests
 
 markerFilenames = [
-	"Arbusto",
 	"Aecor",
-	"CerusAlpha",
-	"CerusBeta",
-	"Collis",
-	"Harenum",
-	"Koryza",
-	"Orcus",
-	"Porrus",
-	"QuodCanis",
-	"Syre",
-	"Terram",
-	"Titus",
 	"Trunkadis",
-	"Sakaro"
+	"QuodCanis",
+	"Collis",
+	"Titus",
+	"Arbusto",
+	"Sakaro",
+	"CerusAlpha",
+	"Harenum",
+	"Terram",
+	"Porrus",
+	"Koryza",
+	"CerusBeta",
+	"Orcus",
+	"Syre",
+	"Demargos",
+	"Remalie"
 ]
 
 def getNationColor(nation):
@@ -24,7 +26,7 @@ def getNationColor(nation):
 	colors = []
 
 	for world in markerFilenames:
-		worldData = json.loads(str(requests.get(f"https://dynmap.starlegacy.net/tiles/_markers_/marker_{world}.json").content)[2:-1])["sets"]["nations"]["areas"]
+		worldData = json.loads(requests.get(f"https://dynmap.starlegacy.net/tiles/_markers_/marker_{world}.json").content)["sets"]["nations"]["areas"]
 
 		for territory in worldData:
 			territoryData = worldData[territory]
@@ -34,3 +36,5 @@ def getNationColor(nation):
 				elif territoryData["color"] == "#008000": pass
 
 				return int(territoryData["color"][1:7], 16)
+
+print(getNationColor("Orovika"))
