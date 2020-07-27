@@ -32,9 +32,6 @@ def getNationColor(nation):
 			territoryData = worldData[territory]
 
 			if nation in territoryData["label"]:
-				if territoryData["color"] == "#FF0000": pass
-				elif territoryData["color"] == "#008000": pass
+				if territoryData["color"] == "#008000": continue
 
 				return int(territoryData["color"][1:7], 16)
-
-print(getNationColor("Orovika"))
